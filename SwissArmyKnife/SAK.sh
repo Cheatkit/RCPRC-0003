@@ -28,10 +28,22 @@ function list_files {
 # Define a function to create file 
 function create_file {
     read -p "Enter path where you want to create your file: " path_file
-    cd $path_file
+
+    # Check if the directory path exists
+    if [ ! -d "$path_file" ]; then
+        # Create the directory path if it doesn't exist
+        mkdir -p "$path_file"
+    fi
+
+    # Change to the directory where the file will be created
+    cd "$path_file"
+
     read -p "Enter name of file: " name_file
-    nano $name_file
+
+    # Create the file using the nano text editor
+    nano "$name_file"
 }
+
 
 # Display the menu and prompt the user for input
 while true; do
