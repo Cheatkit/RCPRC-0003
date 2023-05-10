@@ -221,10 +221,8 @@ function exit_back {
   if [[ "$key" == $'\e' ]]; then
     echo "Returning to main menu..."
     return 0
-    return 0
   elif [[ "$key" == ":exit" ]]; then
     echo "Exiting..."
-    return 0
     return 0
   fi
 }
