@@ -6,9 +6,12 @@ function display_menu {
   echo "1. Ping a host"
   echo "2. List files"
   echo "3. Delete directory and files in it"
-  echo "4. Create and Edit File"
+  echo "4. Create and edit file"
   echo "5. Search for file via search term"
   echo "6. Copy files to destination"
+  echo "7. Add permissions for file"
+  echo "8. Change password"
+  echo "9. Change network settings"
   echo "10. Exit"
 }
 
@@ -22,12 +25,30 @@ function ping_host {
 
 # Define a function to list files (2)
 function list {
+  read -p "Enter your option: List everything 'A' | List files after size 'S' | List directories 'D' | List files/directories after modification date 'T': " option_list
+  
+  if [[ $option_list == "A" ]]; then
+    ls
+  elif [[ $option_list == "S" ]]; then
+    read -p "List files after size: Enter 'r' for ascending order or 'd' for descending order: " order_list
+    if [[ $order_list == "r" ]]; then
+      ls -S
+    elif [[ $order_list == "d" ]]; then
+      ls -rS
+    else
+      echo "Invalid option."
+    fi
+  elif [[ $option_list == "D" ]]; then
+    ls -d */
+  elif [[ $option_list == "T" ]]; then
+    ls -lt
+  else
+    echo "Invalid option."
+  fi
 
-  # prompt the user to choose options
-  read -p "Enter your option:  List everything 'A' | List files after size: " option_list
-  # function to list files
-  ls
+  exit_back
 }
+
 
 
 # Define a function to delete directory (3)
@@ -62,7 +83,7 @@ function delete_dir {
 # Define a function to delete directory and all files
 
 
-# Define a function to create file 
+# Define a function to create file (4)
 function create_file {
     read -p "Enter path where you want to create your file: " path_file
 
@@ -83,7 +104,7 @@ function create_file {
     exit_back
 }
 
-# Define a function to search_file
+# Define a function to search_file (5)
 function search_files {
   # prompt user to enter search_term and read it immediately
   read -p "Enter search term: " search_term
@@ -112,6 +133,89 @@ function search_files {
   exit_back
 }
 
+# Define a function to copy_files (6)
+function copy_files {
+    # Prompt user to enter source and destination paths
+    read -p "Enter the source path: " source_path
+    read -p "Enter the destination path: " dest_path
+
+    # Copy files to destination
+    cp "$source_path" "$dest_path"
+
+    exit_back
+}
+
+# Define a function to change file permissions (7)
+change_permissions() {
+    # Prompt user for filename
+    read -p "Enter the name of the file/path to the file you want to change permissions for: " filename
+
+    # Prompt user for permission options
+    echo "Select new permission options:"
+    echo "1. Owner read, write, and execute"
+    echo "2. Owner read and write only"
+    echo "3. Owner read only"
+    echo "4. Custom permission options"
+    read -p "Enter your choice: " choice
+
+    # Set permission options based on user's choice
+    case "$choice" in
+        1) new_permissions="700";;
+        2) new_permissions="600";;
+        3) new_permissions="400";;
+        4) read -p "Enter custom permission options (e.g. 755): " new_permissions;;
+        *) echo "Invalid choice. Exiting."; return 1;;
+    esac
+
+    # Change file permissions
+    chmod "$new_permissions" "$filename"
+
+    # Display confirmation message
+    echo "File permissions changed to $new_permissions for $filename."
+
+    exit_back
+}
+
+# Define a function to change_password (8)
+function change_password {
+  read -p "Enter the username whose password you want to change: " username
+
+  # Check if the user exists
+  if id "$username" >/dev/null 2>&1; then
+    # User exists, prompt for new password
+    read -s -p "Enter new password for $username: " new_password
+    echo
+
+    # Set the user's new password
+    echo "$new_password" | passwd --stdin "$username"
+
+    echo "Password for $username has been changed."
+  else
+    # User does not exist
+    echo "User $username does not exist."
+  fi
+
+  exit_back
+}
+
+# Defina a function to change_network_settings (9)
+function change_network_settings {
+  read -p "Enter IP address: " ip_addr
+  read -p "Enter subnet mask: " subnet_mask
+  read -p "Enter default gateway: " default_gateway
+  read -p "Enter DNS server IP: " dns_server
+
+  # Change network settings
+  sudo ifconfig eth0 $ip_addr netmask $subnet_mask
+  sudo route add default gw $default_gateway
+  sudo echo "nameserver $dns_server" > /etc/resolv.conf
+
+  echo "Network settings changed successfully."
+
+  exit_back
+}
+
+# Define a function to abort 
 function exit_back {
   read -s -N 1 key
   if [[ "$key" == $'\e' ]]; then
@@ -155,6 +259,22 @@ while true; do
     # Call function search_files
       search_files
       ;;
+    6)
+    # Call function copy_files
+      copy_files
+      ;;
+    7)
+    # Call function change_permissions
+      change_permissions
+      ;;
+    8)
+    # Call function change_password
+      change_password
+      ;;
+    9)
+    # Call function
+      change_network_settings
+      ;; 
     10)
     # Exit the script
       exit 0
