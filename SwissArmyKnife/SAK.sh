@@ -221,8 +221,10 @@ function exit_back {
   if [[ "$key" == $'\e' ]]; then
     echo "Returning to main menu..."
     return 0
+    return 0
   elif [[ "$key" == ":exit" ]]; then
     echo "Exiting..."
+    return 0
     return 0
   fi
 }
@@ -245,7 +247,7 @@ while true; do
       ;;
     2)
     # Call function list_files
-      list_files
+      list
       ;;
     3)
     # Call function delete_dir
