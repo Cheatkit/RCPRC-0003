@@ -217,9 +217,12 @@ function change_network_settings {
 
 # Define a function to abort 
 function exit_back {
-  read -s -N 1 key
+  read -s -p "Press any key to return to main menu. Type ':exit' to exit." key
   if [[ "$key" == $'\e' ]]; then
     echo "Returning to main menu..."
+    return 0
+  elif [[ "$key" == ":exit" ]]; then
+    echo "Exiting..."
     return 0
   fi
 }
@@ -230,12 +233,9 @@ function exit_back {
 # Display the menu and prompt the user for input
 while true; do
   display_menu
-  read -p "Enter your choice (or type ':exit' to return to the main menu): " choice
+  read -p "Enter your choice (or type ':exit' to return to the main selection): " choice
 
   # Check if the user wants to exit to the main menu
-  if [[ "$choice" == ":exit" ]]; then
-    continue
-  fi
 
   # Check the user's input
   case "$choice" in
