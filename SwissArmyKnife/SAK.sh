@@ -55,29 +55,35 @@
         function delete_dir {
         read -p "Enter the path to file/directory to delete (or 'X' to delete entire directory): " path_delete
 
-        if [[ "$path_delete" == "X" ]]; then
-        read -p "Are you sure you want to delete the entire directory? (Y/N): " confirm_delete
+        if [[ "$path_delete" == "X" || "$path_delete" == "x" ]]; then
+                echo -en "\e[31mWARNING THIS ACTION WILL DELETE EVERYTHING IN THE DIRECTORY\e[0m\r"
+                sleep 1
+                echo ""
+                read -p  "Are you sure you want to proceed? (Y/N): " confirm_delete
 
-        if [[ "$confirm_delete" == "Y" ]]; then
-        rm -rf *
+                if [[ "$confirm_delete" == "Y" || "$confirm_delete" == "y" ]]; then
+                read -p "Enter name of directory you want to delete (Alternatively enter path of directory): " path_deletion_dir
+
+                rm -drf "$path_deletion_dir"/*
+                else
+                echo "Deletion cancelled."
+                fi
         else
-        echo "Deletion cancelled."
-        fi
-        else
-        if [[ -e "$path_delete" ]]; then
-        read -p "Are you sure you want to delete this file? (Y/N): " confirm_delete
-        if [[ "$confirm_delete" == "Y" ]]; then
-        rm "$path_delete"
-        else
-        echo "Deletion cancelled."
-        fi
-        else
-        echo "File/directory not found."
-        fi
+                if [[ -e "$path_delete" ]]; then
+                read -p "Are you sure you want to delete this file/directory? (Y/N): " confirm_delete
+                if [[ "$confirm_delete" == "Y" || "$confirm_delete" == "y" ]]; then
+                        rm -rf "$path_delete"
+                else
+                        echo "Deletion cancelled."
+                fi
+                else
+                echo "File/directory not found."
+                fi
         fi
 
         exit_back
         }
+
 
 
         # Define a function to delete directory and all files
