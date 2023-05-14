@@ -52,7 +52,7 @@ This script is provided as-is without any warranty. The authors and contributors
 
 ## Contributions
 
-Contributions to the Git Automation Script are welcome! If you find any issues or have ideas for improvements, please open an issue or submit a pull request on the [GitHub repository](https://github.com/your-repo) (replace "your-repo" with your actual repository URL).
+Contributions to the Git Automation Script are welcome! If you find any issues or have ideas for improvements, please open an issue or submit a pull request on the [GitHub repository](https://github.com/RCPRC/RCPRC-0003)
 
 ---
 
