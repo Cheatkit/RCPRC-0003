@@ -26,11 +26,15 @@ The script requires the following dependencies to be installed:
 
 To use the Git Automation Script, follow these steps:
 
-1. Ensure that the script file (`git_automation.sh`) has executable permissions. If not, grant the necessary permissions using the command: `chmod +x git_automation.sh`.
-2. Run the script in your preferred shell by executing the command: `./git_automation.sh`.
-3. The script will present a menu with several options. Enter the corresponding number to perform the desired action.
-4. Follow the prompts and provide the required information as requested by the script.
-5. Once the operation is completed, you will see appropriate success messages.
+1. Ensure that the script file `git_automation.sh` has executable permissions. If not, grant the necessary permissions using the command: 
+        
+        chmod +x git_automation.sh
+3. Run the script in your preferred shell by executing the command: 
+        
+        ./git_automation.sh
+5. The script will present a menu with several options. Enter the corresponding number to perform the desired action.
+6. Follow the prompts and provide the required information as requested by the script.
+7. Once the operation is completed, you will see appropriate success messages.
 
 ## Notes
 
