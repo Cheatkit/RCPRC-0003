@@ -5,3 +5,8 @@ Everything Shell
 A Shell script with various functions in short it's a Swiss Army Knife of a shell script, hence the name SAK.
 
 - [S.A.K - Swiss Army Knife](/SwissArmyKnife/)
+
+### git automation
+A Shell script that automates the git workflow
+
+- [git_automation](/git_automation/)
